@@ -1,6 +1,13 @@
 package com.booster.cliclient;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -8,6 +15,8 @@ import org.springframework.stereotype.Component;
 public class BoosterCliLauncher {
 
     private final UserInputReader adapter;
+    private final OkHttpClient okHttpClient;
+    private final ObjectMapper objectMapper;
 
     public void start() {
         System.out.print(">> ");
@@ -28,6 +37,8 @@ public class BoosterCliLauncher {
         }
     }
 
+    @SneakyThrows
+    // todo: handle OkHttp exceptions
     private void addVocabularyEntry() {
         System.out.print(">> Name: ");
         String name = adapter.readLine();
@@ -42,7 +53,23 @@ public class BoosterCliLauncher {
         if (cmd2 == Command.EXIT) {
             return;
         }
-        System.out.println("Added vocabulary entry [name=" + name + ", description=" + description + "]");
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),
+                objectMapper.writeValueAsString(new CreateVocabularyEntryInput()
+                        .setName(name)
+                        .setDescription(description)));
+
+        Request request = new Request.Builder()
+                .url("http://localhost:8081/vocabulary-entry")
+                .post(requestBody)
+                .build();
+
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                System.out.println(">> Added vocabulary entry [name=" + name + ", description=" + description + "]");
+            } else {
+                System.out.println(">> Error occurred");
+            }
+        }
     }
 
 }
