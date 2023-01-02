@@ -1,1 +1,5 @@
-
+# mock server logs are printed to the System.in and they break the assertions.
+# todo: redirect the logs to a different output stream
+logging:
+  level:
+    org.mockserver: ERROR
