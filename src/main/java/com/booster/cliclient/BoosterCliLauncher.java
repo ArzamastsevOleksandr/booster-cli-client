@@ -3,11 +3,7 @@ package com.booster.cliclient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import okhttp3.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,13 +19,20 @@ public class BoosterCliLauncher {
         String input = adapter.readLine();
         Command command = Command.from(input);
 
-        while (command != Command.EXIT) {
-            if (command == Command.DO_NOTHING) {
-                // do nothing
-            } else if (command == Command.UNDEFINED) {
-                System.out.println("Unsupported command: " + input);
-            } else if (command == Command.ADD_VOCABULARY_ENTRY) {
-                addVocabularyEntry();
+        while (command != Command.EXIT)
+        {
+            switch (command) {
+                case DO_NOTHING:
+                    // do nothing
+                    break;
+                case UNDEFINED:
+                    System.out.println("Unsupported command: " + input);
+                    break;
+                case ADD_VOCABULARY_ENTRY:
+                    addVocabularyEntry();
+                    break;
+                case ADD_NOTE:
+                    addNote();
             }
             System.out.print(">> ");
             input = adapter.readLine();
@@ -66,6 +69,34 @@ public class BoosterCliLauncher {
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 System.out.println(">> Added vocabulary entry [name=" + name + ", description=" + description + "]");
+            } else {
+                System.out.println(">> Error occurred");
+            }
+        }
+    }
+
+    @SneakyThrows
+    // todo: handle OkHttp exceptions
+    private void addNote() {
+        System.out.print(">> Content: ");
+        String content = adapter.readLine();
+
+        Command cmd = Command.from(content);
+        if (cmd == Command.EXIT) {
+            return;
+        }
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),
+                objectMapper.writeValueAsString(new CreateNoteInput().setContent(content)));
+
+        Request request = new Request.Builder()
+                .url("http://localhost:8081/note")
+                .post(requestBody)
+                .build();
+
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                System.out.println(">> Added note [content=" + content + "]");
             } else {
                 System.out.println(">> Error occurred");
             }
