@@ -28,7 +28,7 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
                             "name": "%s",
                             "description": "%s"
                         }
-                        """.formatted(name, description).trim().stripIndent()));
+                        """.formatted(name, description)));
 
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         PrintStream console = System.out;
@@ -66,7 +66,7 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
                 name,
                 description,
                 name, description,
-                Command.EXIT.getValue()).trim().stripIndent());
+                Command.EXIT.getValue()));
     }
 
 }
