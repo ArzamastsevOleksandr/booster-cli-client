@@ -12,18 +12,18 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 import static org.mockserver.model.StringBody.exact;
 
-
 public class AddNoteCommandTest extends BaseIntegrationTest {
 
     @Test
-    void AddNoteCommandFlow() throws JsonProcessingException {
+    void addNoteCommandFlow() throws JsonProcessingException {
         String content = "My first note";
 
         mockServer.when(request().withMethod("POST").withPath("/note")
-                .withBody(exact(objectMapper.writeValueAsString(new CreateNoteInput().setContent(content)))))
+                        .withBody(exact(objectMapper.writeValueAsString(new CreateNoteInput().setContent(content)))))
                 .respond(response().withStatusCode(201).withBody("""
                         {
                             "content": %s
+                        }
                         """.formatted(content)));
 
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -31,10 +31,7 @@ public class AddNoteCommandTest extends BaseIntegrationTest {
         try {
             System.setOut(new PrintStream(bytes));
 
-            doAnswer(new MultipleAnswer<>(i->{
-                System.out.println();
-                return "";
-            }, i -> {
+            doAnswer(new MultipleAnswer<>(i -> {
                 System.out.println(Command.ADD_NOTE.getValue());
                 return Command.ADD_NOTE.getValue();
             }, i -> {
@@ -51,7 +48,6 @@ public class AddNoteCommandTest extends BaseIntegrationTest {
         }
 
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
-                >>
                 >> %s
                 >> Content: %s
                 >> Added note [content=%s]

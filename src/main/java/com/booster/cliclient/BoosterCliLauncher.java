@@ -19,14 +19,13 @@ public class BoosterCliLauncher {
         String input = adapter.readLine();
         Command command = Command.from(input);
 
-        while (command != Command.EXIT)
-        {
+        while (command != Command.EXIT) {
             switch (command) {
                 case DO_NOTHING:
                     // do nothing
                     break;
                 case UNDEFINED:
-                    System.out.println("Unsupported command: " + input);
+                    System.out.println(">> Unsupported command: " + input);
                     break;
                 case ADD_VOCABULARY_ENTRY:
                     addVocabularyEntry();
