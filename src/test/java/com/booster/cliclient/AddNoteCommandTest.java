@@ -50,9 +50,7 @@ public class AddNoteCommandTest extends BaseIntegrationTest {
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
                 >> %s
                 >> Content: %s
-                >> Added note [content=%s]
                 >> %s""".formatted(Command.ADD_NOTE.getValue(),
-                content,
                 content,
                 Command.EXIT.getValue()));
     }

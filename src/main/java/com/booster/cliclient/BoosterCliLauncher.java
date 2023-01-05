@@ -1,10 +1,13 @@
 package com.booster.cliclient;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -29,6 +32,9 @@ public class BoosterCliLauncher {
                     break;
                 case ADD_VOCABULARY_ENTRY:
                     addVocabularyEntry();
+                    break;
+                case LIST_VOCABULARY_ENTRIES:
+                    listVocabularyEntries();
                     break;
                 case ADD_NOTE:
                     addNote();
@@ -66,9 +72,7 @@ public class BoosterCliLauncher {
                 .build();
 
         try (Response response = okHttpClient.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                System.out.println(">> Added vocabulary entry [name=" + name + ", description=" + description + "]");
-            } else {
+            if (!response.isSuccessful()) {
                 System.out.println(">> Error occurred");
             }
         }
@@ -94,8 +98,26 @@ public class BoosterCliLauncher {
                 .build();
 
         try (Response response = okHttpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                System.out.println(">> Error occurred");
+            }
+        }
+    }
+
+    @SneakyThrows
+    // todo: handle OkHttp exceptions
+    private void listVocabularyEntries() {
+        Request request = new Request.Builder()
+                .url("http://localhost:8081/vocabulary-entry/list?size=5") // todo: temporary hardcode
+                .get()
+                .build();
+
+        try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
-                System.out.println(">> Added note [content=" + content + "]");
+                String list = response.body().string();
+                List<VocabularyEntryDto> createVocabularyEntryInputs = objectMapper.readValue(list, new TypeReference<>() {
+                });
+                createVocabularyEntryInputs.forEach(entry -> System.out.println(">> " + entry));
             } else {
                 System.out.println(">> Error occurred");
             }
