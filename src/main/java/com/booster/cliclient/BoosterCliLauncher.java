@@ -115,9 +115,9 @@ public class BoosterCliLauncher {
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 String list = response.body().string();
-                List<VocabularyEntryDto> createVocabularyEntryInputs = objectMapper.readValue(list, new TypeReference<>() {
+                List<VocabularyEntryDto> vocabularyEntries = objectMapper.readValue(list, new TypeReference<>() {
                 });
-                createVocabularyEntryInputs.forEach(entry -> System.out.println(">> " + entry));
+                vocabularyEntries.forEach(entry -> System.out.println(">> " + entry));
             } else {
                 System.out.println(">> Error occurred");
             }
