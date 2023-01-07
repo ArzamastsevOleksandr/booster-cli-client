@@ -11,6 +11,7 @@ public enum Command {
     EXIT("e"),
     DO_NOTHING(""),
     ADD_VOCABULARY_ENTRY("ave"),
+    LIST_VOCABULARY_ENTRIES("lve"),
     ADD_NOTE("an"),
     UNDEFINED("IGNORED");
 

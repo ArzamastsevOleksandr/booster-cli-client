@@ -61,11 +61,9 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
                 >> %s
                 >> Name: %s
                 >> Description: %s
-                >> Added vocabulary entry [name=%s, description=%s]
                 >> %s""".formatted(Command.ADD_VOCABULARY_ENTRY.getValue(),
                 name,
                 description,
-                name, description,
                 Command.EXIT.getValue()));
     }
 
