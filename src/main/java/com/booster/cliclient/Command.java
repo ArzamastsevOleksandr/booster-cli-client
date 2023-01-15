@@ -13,6 +13,7 @@ public enum Command {
     ADD_VOCABULARY_ENTRY("ave"),
     LIST_VOCABULARY_ENTRIES("lve"),
     ADD_NOTE("an"),
+    LIST_NOTES("ln"),
     UNDEFINED("IGNORED");
 
     @Getter

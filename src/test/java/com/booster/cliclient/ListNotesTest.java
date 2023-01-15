@@ -10,29 +10,25 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
-public class ListVocabularyEntriesTest extends BaseIntegrationTest {
+public class ListNotesTest extends BaseIntegrationTest {
 
     @Test
-    void listVocabularyEntriesFlow() {
-        String coalesce = "coalesce";
-        String coalesceDescription = "come together to form one mass or whole";
-        String robust = "robust";
-        String robustDescription = "strong and healthy; hardy; vigorous";
+    void listNotesFlow() {
+        String firstNoteContent = "Buy coffee";
+        String secondNoteContent = "Call a friend";
 
-        mockServer.when(request().withMethod("GET").withPath("/vocabulary-entry/list")
+        mockServer.when(request().withMethod("GET").withPath("/note/list")
                         .withQueryStringParameter("size", "5"))
                 .respond(response().withStatusCode(200).withBody("""
                         [
                             {
-                                "name": "%s",
-                                "description": "%s"
+                                "content": "%s"
                             },
                             {
-                                "name": "%s",
-                                "description": "%s"
+                                "content": "%s"
                             }
                         ]
-                        """.formatted(coalesce, coalesceDescription, robust, robustDescription)));
+                        """.formatted(firstNoteContent, secondNoteContent)));
 
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         PrintStream console = System.out;
@@ -40,8 +36,8 @@ public class ListVocabularyEntriesTest extends BaseIntegrationTest {
             System.setOut(new PrintStream(bytes));
 
             doAnswer(new MultipleAnswer<>(i -> {
-                System.out.println(Command.LIST_VOCABULARY_ENTRIES.getValue());
-                return Command.LIST_VOCABULARY_ENTRIES.getValue();
+                System.out.println(Command.LIST_NOTES.getValue());
+                return Command.LIST_NOTES.getValue();
             }, i -> {
                 System.out.println(Command.EXIT.getValue());
                 return Command.EXIT.getValue();
@@ -53,12 +49,12 @@ public class ListVocabularyEntriesTest extends BaseIntegrationTest {
         }
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
                 >> %s
-                >> VocabularyEntryDto(name=%s, description=%s)
-                >> VocabularyEntryDto(name=%s, description=%s)
+                >> NoteDto(content=%s)
+                >> NoteDto(content=%s)
                 >> %s"""
-                .formatted(Command.LIST_VOCABULARY_ENTRIES.getValue(),
-                        coalesce, coalesceDescription,
-                        robust, robustDescription,
+                .formatted(Command.LIST_NOTES.getValue(),
+                        firstNoteContent,
+                        secondNoteContent,
                         Command.EXIT.getValue()));
     }
 
