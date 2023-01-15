@@ -38,6 +38,10 @@ public class BoosterCliLauncher {
                     break;
                 case ADD_NOTE:
                     addNote();
+                    break;
+                case LIST_NOTES:
+                    listNotes();
+                    break;
             }
             System.out.print(">> ");
             input = adapter.readLine();
@@ -118,6 +122,26 @@ public class BoosterCliLauncher {
                 List<VocabularyEntryDto> vocabularyEntries = objectMapper.readValue(list, new TypeReference<>() {
                 });
                 vocabularyEntries.forEach(entry -> System.out.println(">> " + entry));
+            } else {
+                System.out.println(">> Error occurred");
+            }
+        }
+    }
+
+    @SneakyThrows
+    // todo: handle OkHttp exceptions
+    private void listNotes() {
+        Request request = new Request.Builder()
+                .url("http://localhost:8081/note/list?size=5") // todo: temporary hardcode
+                .get()
+                .build();
+
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                String list = response.body().string();
+                List<NoteDto> notes = objectMapper.readValue(list, new TypeReference<>() {
+                });
+                notes.forEach(note -> System.out.println(">> " + note));
             } else {
                 System.out.println(">> Error occurred");
             }
