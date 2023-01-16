@@ -3,7 +3,7 @@ package com.booster.cliclient;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OutputFormatter {
+public class OutputWriter {
 
     public void printStart() {
         System.out.print(">> ");

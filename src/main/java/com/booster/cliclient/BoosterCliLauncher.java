@@ -16,10 +16,10 @@ public class BoosterCliLauncher {
     private final UserInputReader adapter;
     private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
-    private final OutputFormatter outputFormatter;
+    private final OutputWriter outputWriter;
 
     public void start() {
-        outputFormatter.printStart();
+        outputWriter.printStart();
         String input = adapter.readLine();
         Command command = Command.from(input);
 
@@ -29,7 +29,7 @@ public class BoosterCliLauncher {
                     // do nothing
                     break;
                 case UNDEFINED:
-                    outputFormatter.print("Unsupported command", input);
+                    outputWriter.print("Unsupported command", input);
                     break;
                 case ADD_VOCABULARY_ENTRY:
                     addVocabularyEntry();
@@ -44,7 +44,7 @@ public class BoosterCliLauncher {
                     listNotes();
                     break;
             }
-            outputFormatter.printStart();
+            outputWriter.printStart();
             input = adapter.readLine();
             command = Command.from(input);
         }
@@ -53,14 +53,14 @@ public class BoosterCliLauncher {
     @SneakyThrows
     // todo: handle OkHttp exceptions
     private void addVocabularyEntry() {
-        outputFormatter.print("Name");
+        outputWriter.print("Name");
         String name = adapter.readLine();
 
         Command cmd = Command.from(name);
         if (cmd == Command.EXIT) {
             return;
         }
-        outputFormatter.print("Description");
+        outputWriter.print("Description");
         String description = adapter.readLine();
         Command cmd2 = Command.from(description);
         if (cmd2 == Command.EXIT) {
@@ -78,7 +78,7 @@ public class BoosterCliLauncher {
 
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                outputFormatter.print("Error occurred");
+                outputWriter.print("Error occurred");
             }
         }
     }
@@ -86,7 +86,7 @@ public class BoosterCliLauncher {
     @SneakyThrows
     // todo: handle OkHttp exceptions
     private void addNote() {
-        outputFormatter.print("Content");
+        outputWriter.print("Content");
         String content = adapter.readLine();
 
         Command cmd = Command.from(content);
@@ -104,7 +104,7 @@ public class BoosterCliLauncher {
 
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                outputFormatter.print("Error occurred");
+                outputWriter.print("Error occurred");
             }
         }
     }
@@ -122,9 +122,9 @@ public class BoosterCliLauncher {
                 String list = response.body().string();
                 List<VocabularyEntryDto> vocabularyEntries = objectMapper.readValue(list, new TypeReference<>() {
                 });
-                vocabularyEntries.forEach(outputFormatter::print);
+                vocabularyEntries.forEach(outputWriter::print);
             } else {
-                outputFormatter.print("Error occurred");
+                outputWriter.print("Error occurred");
             }
         }
     }
@@ -142,9 +142,9 @@ public class BoosterCliLauncher {
                 String list = response.body().string();
                 List<NoteDto> notes = objectMapper.readValue(list, new TypeReference<>() {
                 });
-                notes.forEach(outputFormatter::print);
+                notes.forEach(outputWriter::print);
             } else {
-                outputFormatter.print("Error occurred");
+                outputWriter.print("Error occurred");
             }
         }
     }
