@@ -1,20 +1,23 @@
 package com.booster.cliclient;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class OutputFormatter {
 
-    public static void printStart() {
+    public void printStart() {
         System.out.print(">> ");
     }
 
-    public static void print(String outputMessage) {
+    public void print(String outputMessage) {
         System.out.printf(">> %s: ", outputMessage);
     }
 
-    public static void print(Object outputMessage) {
+    public void print(Object outputMessage) {
         System.out.printf(">> %s%n", outputMessage);
     }
 
-    public static void print(String outputMessage, String inputParameter) {
+    public void print(String outputMessage, String inputParameter) {
         System.out.printf(">> %s: %s", outputMessage, inputParameter);
     }
 
