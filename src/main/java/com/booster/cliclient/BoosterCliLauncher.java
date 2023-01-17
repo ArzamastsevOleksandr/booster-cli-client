@@ -19,9 +19,7 @@ public class BoosterCliLauncher {
     private final OutputWriter outputWriter;
 
     public void start() {
-        outputWriter.printStart();
-        String input = adapter.readLine();
-        Command command = Command.from(input);
+        Command command = getCommand();
 
         while (command != Command.EXIT) {
             switch (command) {
@@ -29,7 +27,7 @@ public class BoosterCliLauncher {
                     // do nothing
                     break;
                 case UNDEFINED:
-                    outputWriter.print("Unsupported command", input);
+                    outputWriter.print("Unsupported command");
                     break;
                 case ADD_VOCABULARY_ENTRY:
                     addVocabularyEntry();
@@ -44,10 +42,14 @@ public class BoosterCliLauncher {
                     listNotes();
                     break;
             }
-            outputWriter.printStart();
-            input = adapter.readLine();
-            command = Command.from(input);
+            command = getCommand();
         }
+    }
+
+    private Command getCommand() {
+        outputWriter.printStart();
+        String input = adapter.readLine();
+        return Command.from(input);
     }
 
     @SneakyThrows

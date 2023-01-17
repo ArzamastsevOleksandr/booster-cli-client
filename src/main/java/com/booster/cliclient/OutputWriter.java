@@ -17,8 +17,4 @@ public class OutputWriter {
         System.out.printf(">> %s%n", outputMessage);
     }
 
-    public void print(String outputMessage, String inputParameter) {
-        System.out.printf(">> %s: %s", outputMessage, inputParameter);
-    }
-
 }
