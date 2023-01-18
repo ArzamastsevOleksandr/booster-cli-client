@@ -13,6 +13,10 @@ public class OutputWriter {
         System.out.printf(">> %s: ", outputMessage);
     }
 
+    public void printWarning(String outputMessage) {
+        System.out.printf(">> %s%n", outputMessage);
+    }
+
     public void print(Object outputMessage) {
         System.out.printf(">> %s%n", outputMessage);
     }

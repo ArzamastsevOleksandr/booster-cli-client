@@ -1,7 +1,7 @@
 package com.booster.cliclient.handler;
 
 import com.booster.cliclient.Command;
-import com.booster.cliclient.CreateVocabularyEntryInput;
+import com.booster.cliclient.CreateNoteInput;
 import com.booster.cliclient.OutputWriter;
 import com.booster.cliclient.UserInputReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AddVocabularyEntryHandler implements CommandHandler {
+public class AddNoteCommandHandler implements CommandHandler {
 
     private final UserInputReader adapter;
     private final OkHttpClient okHttpClient;
@@ -23,26 +23,19 @@ public class AddVocabularyEntryHandler implements CommandHandler {
     @SneakyThrows
     // todo: handle OkHttp exceptions
     public void handle() {
-        outputWriter.print("Name");
-        String name = adapter.readLine();
+        outputWriter.print("Content");
+        String content = adapter.readLine();
 
-        Command cmd = Command.from(name);
+        Command cmd = Command.from(content);
         if (cmd == Command.EXIT) {
             return;
         }
-        outputWriter.print("Description");
-        String description = adapter.readLine();
-        Command cmd2 = Command.from(description);
-        if (cmd2 == Command.EXIT) {
-            return;
-        }
+
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),
-                objectMapper.writeValueAsString(new CreateVocabularyEntryInput()
-                        .setName(name)
-                        .setDescription(description)));
+                objectMapper.writeValueAsString(new CreateNoteInput().setContent(content)));
 
         Request request = new Request.Builder()
-                .url("http://localhost:8081/vocabulary-entry")
+                .url("http://localhost:8081/note")
                 .post(requestBody)
                 .build();
 

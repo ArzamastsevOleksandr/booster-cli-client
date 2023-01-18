@@ -1,9 +1,6 @@
 package com.booster.cliclient;
 
-import com.booster.cliclient.handler.AddNoteHandler;
-import com.booster.cliclient.handler.AddVocabularyEntryHandler;
-import com.booster.cliclient.handler.ListNotesHandler;
-import com.booster.cliclient.handler.ListVocabularyEntriesHandler;
+import com.booster.cliclient.handler.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,34 +10,24 @@ public class BoosterCliLauncher {
 
     private final UserInputReader adapter;
     private final OutputWriter outputWriter;
-    private final AddVocabularyEntryHandler addVocabularyEntryHandler;
-    private final AddNoteHandler addNoteHandler;
-    private final ListVocabularyEntriesHandler listVocabularyEntriesHandler;
-    private final ListNotesHandler listNotesHandler;
+    private final AddVocabularyEntryCommandHandler addVocabularyEntryCommandHandler;
+    private final AddNoteCommandHandler addNoteCommandHandler;
+    private final ListVocabularyEntriesCommandHandler listVocabularyEntriesCommandHandler;
+    private final ListNotesCommandHandler listNotesCommandHandler;
+    private final DoNothingCommandHandler doNothingCommandHandler;
+    private final UndefinedCommandHandler undefinedCommandHandler;
 
     public void start() {
         Command command = getCommand();
 
         while (command != Command.EXIT) {
             switch (command) {
-                case DO_NOTHING:
-                    // do nothing
-                    break;
-                case UNDEFINED:
-                    outputWriter.print("Unsupported command");
-                    break;
-                case ADD_VOCABULARY_ENTRY:
-                    addVocabularyEntryHandler.handle();
-                    break;
-                case LIST_VOCABULARY_ENTRIES:
-                    listVocabularyEntriesHandler.handle();
-                    break;
-                case ADD_NOTE:
-                    addNoteHandler.handle();
-                    break;
-                case LIST_NOTES:
-                    listNotesHandler.handle();
-                    break;
+                case DO_NOTHING -> doNothingCommandHandler.handle();
+                case UNDEFINED -> undefinedCommandHandler.handle();
+                case ADD_VOCABULARY_ENTRY -> addVocabularyEntryCommandHandler.handle();
+                case LIST_VOCABULARY_ENTRIES -> listVocabularyEntriesCommandHandler.handle();
+                case ADD_NOTE -> addNoteCommandHandler.handle();
+                case LIST_NOTES -> listNotesCommandHandler.handle();
             }
             command = getCommand();
         }

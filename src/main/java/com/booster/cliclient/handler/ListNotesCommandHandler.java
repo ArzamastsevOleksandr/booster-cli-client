@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ListNotesHandler implements CommandHandler {
+public class ListNotesCommandHandler implements CommandHandler {
 
     private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
