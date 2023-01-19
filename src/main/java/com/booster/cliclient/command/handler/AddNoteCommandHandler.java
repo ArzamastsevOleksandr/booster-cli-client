@@ -1,16 +1,20 @@
-package com.booster.cliclient.handler;
+package com.booster.cliclient.command.handler;
 
-import com.booster.cliclient.Command;
-import com.booster.cliclient.CreateNoteInput;
-import com.booster.cliclient.OutputWriter;
-import com.booster.cliclient.UserInputReader;
+import com.booster.cliclient.dto.CreateNoteInput;
+import com.booster.cliclient.console.OutputWriter;
+import com.booster.cliclient.console.UserInputReader;
+import com.booster.cliclient.command.Command;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import okhttp3.*;
-import org.springframework.stereotype.Service;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class AddNoteCommandHandler implements CommandHandler {
 

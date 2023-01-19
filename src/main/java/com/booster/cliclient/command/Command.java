@@ -1,4 +1,4 @@
-package com.booster.cliclient;
+package com.booster.cliclient.command;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ public enum Command {
     LIST_VOCABULARY_ENTRIES("lve"),
     ADD_NOTE("an"),
     LIST_NOTES("ln"),
+    HELP("h"),
     UNDEFINED("IGNORED");
 
     @Getter
@@ -24,6 +25,11 @@ public enum Command {
                 .filter(cmd -> cmd.value.equals(in))
                 .findFirst()
                 .orElse(UNDEFINED);
+    }
+
+    @Override
+    public String toString() {
+        return this.name() + "(" + getValue() + ")";
     }
 
 }

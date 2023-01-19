@@ -1,5 +1,6 @@
 package com.booster.cliclient;
 
+import com.booster.cliclient.command.Command;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -52,11 +53,14 @@ public class ListVocabularyEntriesTest extends BaseIntegrationTest {
             System.setOut(console);
         }
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
+                >> Welcome to the booster-cli!
+                >> Type any command or '%s' to get help.
                 >> %s
                 >> VocabularyEntryDto(name=%s, description=%s)
                 >> VocabularyEntryDto(name=%s, description=%s)
                 >> %s"""
-                .formatted(Command.LIST_VOCABULARY_ENTRIES.getValue(),
+                .formatted(Command.HELP.getValue(),
+                        Command.LIST_VOCABULARY_ENTRIES.getValue(),
                         coalesce, coalesceDescription,
                         robust, robustDescription,
                         Command.EXIT.getValue()));

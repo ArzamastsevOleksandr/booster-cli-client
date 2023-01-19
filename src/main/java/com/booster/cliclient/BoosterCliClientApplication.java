@@ -1,5 +1,6 @@
 package com.booster.cliclient;
 
+import com.booster.cliclient.launcher.BoosterCliLauncher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

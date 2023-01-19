@@ -1,5 +1,7 @@
 package com.booster.cliclient;
 
+import com.booster.cliclient.command.Command;
+import com.booster.cliclient.dto.CreateNoteInput;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 
@@ -48,9 +50,12 @@ public class AddNoteCommandTest extends BaseIntegrationTest {
         }
 
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
+                >> Welcome to the booster-cli!
+                >> Type any command or '%s' to get help.
                 >> %s
                 >> Content: %s
-                >> %s""".formatted(Command.ADD_NOTE.getValue(),
+                >> %s""".formatted(Command.HELP.getValue(),
+                Command.ADD_NOTE.getValue(),
                 content,
                 Command.EXIT.getValue()));
     }

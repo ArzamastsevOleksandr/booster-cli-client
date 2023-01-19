@@ -1,4 +1,4 @@
-package com.booster.cliclient;
+package com.booster.cliclient.console;
 
 import org.springframework.stereotype.Service;
 
@@ -13,8 +13,12 @@ public class OutputWriter {
         System.out.printf(">> %s: ", outputMessage);
     }
 
-    public void printWarning(String outputMessage) {
+    public void println(String outputMessage) {
         System.out.printf(">> %s%n", outputMessage);
+    }
+
+    public void println() {
+        System.out.printf(">>%n");
     }
 
     public void print(Object outputMessage) {

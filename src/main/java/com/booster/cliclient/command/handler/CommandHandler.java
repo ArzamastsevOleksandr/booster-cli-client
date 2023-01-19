@@ -1,4 +1,4 @@
-package com.booster.cliclient.handler;
+package com.booster.cliclient.command.handler;
 
 import com.booster.cliclient.Command;
 
