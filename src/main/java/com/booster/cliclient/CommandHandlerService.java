@@ -26,9 +26,10 @@ public class CommandHandlerService {
     }
 
     public void handle(Command command) {
-        CommandHandler commandHandler = Optional.ofNullable(commandHandlerPerCommand.get(command))
-                .orElseThrow(() -> new IllegalArgumentException("Command has no handler [command=%s]".formatted(command)));
-        commandHandler.handle();
+        Optional.ofNullable(commandHandlerPerCommand.get(command))
+                .ifPresentOrElse(CommandHandler::handle, () -> {
+                    throw new IllegalArgumentException("Command has no handler [command=%s]".formatted(command));
+                });
     }
 
 }
