@@ -1,5 +1,7 @@
 package com.booster.cliclient;
 
+import com.booster.cliclient.console.UserInputReader;
+import com.booster.cliclient.launcher.BoosterCliLauncher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

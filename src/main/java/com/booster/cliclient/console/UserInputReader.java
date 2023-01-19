@@ -1,4 +1,4 @@
-package com.booster.cliclient;
+package com.booster.cliclient.console;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

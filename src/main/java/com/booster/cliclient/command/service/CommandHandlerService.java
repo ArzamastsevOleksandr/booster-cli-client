@@ -1,6 +1,7 @@
-package com.booster.cliclient;
+package com.booster.cliclient.command.service;
 
-import com.booster.cliclient.handler.CommandHandler;
+import com.booster.cliclient.command.Command;
+import com.booster.cliclient.command.handler.CommandHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

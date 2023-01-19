@@ -1,8 +1,8 @@
-package com.booster.cliclient.handler;
+package com.booster.cliclient.command.handler;
 
-import com.booster.cliclient.Command;
-import com.booster.cliclient.OutputWriter;
-import com.booster.cliclient.VocabularyEntryDto;
+import com.booster.cliclient.command.Command;
+import com.booster.cliclient.console.OutputWriter;
+import com.booster.cliclient.dto.VocabularyEntryDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +10,11 @@ import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ListVocabularyEntriesCommandHandler implements CommandHandler {
 
