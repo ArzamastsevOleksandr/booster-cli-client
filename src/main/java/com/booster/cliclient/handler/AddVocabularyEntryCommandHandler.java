@@ -53,4 +53,9 @@ public class AddVocabularyEntryCommandHandler implements CommandHandler {
         }
     }
 
+    @Override
+    public Command command() {
+        return Command.ADD_VOCABULARY_ENTRY;
+    }
+
 }

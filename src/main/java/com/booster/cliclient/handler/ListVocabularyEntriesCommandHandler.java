@@ -1,5 +1,6 @@
 package com.booster.cliclient.handler;
 
+import com.booster.cliclient.Command;
 import com.booster.cliclient.OutputWriter;
 import com.booster.cliclient.VocabularyEntryDto;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -40,6 +41,11 @@ public class ListVocabularyEntriesCommandHandler implements CommandHandler {
                 outputWriter.print("Error occurred");
             }
         }
+    }
+
+    @Override
+    public Command command() {
+        return Command.LIST_VOCABULARY_ENTRIES;
     }
 
 }
