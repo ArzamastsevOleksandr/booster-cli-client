@@ -1,9 +1,9 @@
-package com.booster.cliclient.handler;
+package com.booster.cliclient.command.handler;
 
-import com.booster.cliclient.Command;
-import org.springframework.stereotype.Service;
+import com.booster.cliclient.command.Command;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class DoNothingCommandHandler implements CommandHandler {
 
     @Override

@@ -1,5 +1,6 @@
 package com.booster.cliclient;
 
+import com.booster.cliclient.command.Command;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -48,11 +49,14 @@ public class ListNotesTest extends BaseIntegrationTest {
             System.setOut(console);
         }
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
+                >> Welcome to the booster-cli!
+                >> Type any command or '%s' to get help.
                 >> %s
                 >> NoteDto(content=%s)
                 >> NoteDto(content=%s)
                 >> %s"""
-                .formatted(Command.LIST_NOTES.getValue(),
+                .formatted(Command.HELP.getValue(),
+                        Command.LIST_NOTES.getValue(),
                         firstNoteContent,
                         secondNoteContent,
                         Command.EXIT.getValue()));

@@ -1,4 +1,4 @@
-package com.booster.cliclient;
+package com.booster.cliclient.dto;
 
 import lombok.Getter;
 import lombok.Setter;

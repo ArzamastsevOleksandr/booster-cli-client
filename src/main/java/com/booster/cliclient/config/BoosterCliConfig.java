@@ -1,5 +1,6 @@
-package com.booster.cliclient;
+package com.booster.cliclient.config;
 
+import com.booster.cliclient.console.UserInputReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;

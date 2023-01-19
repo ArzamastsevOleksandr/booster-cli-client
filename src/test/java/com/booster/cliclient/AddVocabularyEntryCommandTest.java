@@ -1,5 +1,7 @@
 package com.booster.cliclient;
 
+import com.booster.cliclient.command.Command;
+import com.booster.cliclient.dto.CreateVocabularyEntryInput;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 
@@ -57,11 +59,14 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
             System.setOut(console);
         }
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
+                >> Welcome to the booster-cli!
+                >> Type any command or '%s' to get help.
                 >>
                 >> %s
                 >> Name: %s
                 >> Description: %s
-                >> %s""".formatted(Command.ADD_VOCABULARY_ENTRY.getValue(),
+                >> %s""".formatted(Command.HELP.getValue(),
+                Command.ADD_VOCABULARY_ENTRY.getValue(),
                 name,
                 description,
                 Command.EXIT.getValue()));

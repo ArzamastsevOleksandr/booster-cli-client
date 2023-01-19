@@ -1,11 +1,11 @@
-package com.booster.cliclient.handler;
+package com.booster.cliclient.command.handler;
 
-import com.booster.cliclient.Command;
-import com.booster.cliclient.OutputWriter;
+import com.booster.cliclient.command.Command;
+import com.booster.cliclient.console.OutputWriter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class UndefinedCommandHandler implements CommandHandler {
 
@@ -13,7 +13,7 @@ public class UndefinedCommandHandler implements CommandHandler {
 
     @Override
     public void handle() {
-        outputWriter.printWarning("Unsupported command");
+        outputWriter.println("Unsupported command");
     }
 
     @Override
