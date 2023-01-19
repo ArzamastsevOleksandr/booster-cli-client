@@ -46,4 +46,9 @@ public class AddNoteCommandHandler implements CommandHandler {
         }
     }
 
+    @Override
+    public Command command() {
+        return Command.ADD_NOTE;
+    }
+
 }
