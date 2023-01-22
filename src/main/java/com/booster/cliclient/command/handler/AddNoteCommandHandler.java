@@ -1,17 +1,13 @@
 package com.booster.cliclient.command.handler;
 
-import com.booster.cliclient.dto.CreateNoteInput;
+import com.booster.cliclient.command.Command;
 import com.booster.cliclient.console.OutputWriter;
 import com.booster.cliclient.console.UserInputReader;
-import com.booster.cliclient.command.Command;
+import com.booster.cliclient.dto.CreateNoteInput;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import okhttp3.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -47,6 +43,10 @@ public class AddNoteCommandHandler implements CommandHandler {
             if (!response.isSuccessful()) {
                 outputWriter.print("Error occurred");
             }
+        } catch (Exception e) {
+            outputWriter.println("Oops... We have some problems. Let us know and try a little bit later");
+            outputWriter.println("Cause: %s".formatted(e.getCause().getMessage()));
+            // TODO: log trace/debug can be add for stack trace
         }
     }
 

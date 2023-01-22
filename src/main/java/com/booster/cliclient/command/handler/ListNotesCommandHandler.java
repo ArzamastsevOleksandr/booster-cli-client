@@ -1,8 +1,8 @@
 package com.booster.cliclient.command.handler;
 
 import com.booster.cliclient.command.Command;
-import com.booster.cliclient.dto.NoteDto;
 import com.booster.cliclient.console.OutputWriter;
+import com.booster.cliclient.dto.NoteDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +40,10 @@ public class ListNotesCommandHandler implements CommandHandler {
             } else {
                 outputWriter.print("Error occurred");
             }
+        } catch (Exception e) {
+            outputWriter.println("Oops... We have some problems. Let us know and try a little bit later");
+            outputWriter.println("Cause: %s".formatted(e.getCause().getMessage()));
+            // TODO: log trace/debug can be add for stack trace
         }
     }
 
