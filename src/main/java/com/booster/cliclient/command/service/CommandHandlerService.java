@@ -2,6 +2,7 @@ package com.booster.cliclient.command.service;
 
 import com.booster.cliclient.command.Command;
 import com.booster.cliclient.command.handler.CommandHandler;
+import com.booster.cliclient.console.OutputWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class CommandHandlerService {
 
     private final List<CommandHandler> commandHandlers;
+    private final OutputWriter outputWriter;
 
     private Map<Command, CommandHandler> commandHandlerPerCommand;
 
@@ -28,9 +30,16 @@ public class CommandHandlerService {
 
     public void handle(Command command) {
         Optional.ofNullable(commandHandlerPerCommand.get(command))
-                .ifPresentOrElse(CommandHandler::handle, () -> {
-                    throw new IllegalArgumentException("Command has no handler [command=%s]".formatted(command));
-                });
+                .ifPresentOrElse((commandHandler) -> {
+                            try {
+                                commandHandler.handle();
+                            } catch (Exception e) {
+                                outputWriter.println("Oops, an error occurred. Cause: %s".formatted(e.getCause().getMessage()));
+                            }
+                        },
+                        () -> {
+                            throw new IllegalArgumentException("Command has no handler [command=%s]".formatted(command));
+                        });
     }
 
 }

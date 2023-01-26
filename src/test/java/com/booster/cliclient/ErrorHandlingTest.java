@@ -60,8 +60,7 @@ public class ErrorHandlingTest extends BaseIntegrationTest {
                 >> Type any command or '%s' to get help.
                 >> %s
                 >> Content: %s
-                >> Oops... We have some problems. Let us know and try a little bit later
-                >> Cause: Connection refused
+                >> Oops, an error occurred. Cause: Connection refused
                 >> %s""".formatted(Command.HELP.getValue(),
                 Command.ADD_NOTE.getValue(),
                 content,

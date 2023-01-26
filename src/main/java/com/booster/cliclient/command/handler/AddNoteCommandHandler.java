@@ -43,10 +43,6 @@ public class AddNoteCommandHandler implements CommandHandler {
             if (!response.isSuccessful()) {
                 outputWriter.print("Error occurred");
             }
-        } catch (Exception e) {
-            outputWriter.println("Oops... We have some problems. Let us know and try a little bit later");
-            outputWriter.println("Cause: %s".formatted(e.getCause().getMessage()));
-            // TODO: log trace/debug can be add for stack trace
         }
     }
 
