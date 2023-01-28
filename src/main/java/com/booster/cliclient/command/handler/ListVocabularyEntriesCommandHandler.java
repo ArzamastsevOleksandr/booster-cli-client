@@ -37,8 +37,6 @@ public class ListVocabularyEntriesCommandHandler implements CommandHandler {
                 List<VocabularyEntryDto> vocabularyEntries = objectMapper.readValue(list, new TypeReference<>() {
                 });
                 vocabularyEntries.forEach(outputWriter::print);
-            } else {
-                outputWriter.print("Error occurred");
             }
         }
     }
