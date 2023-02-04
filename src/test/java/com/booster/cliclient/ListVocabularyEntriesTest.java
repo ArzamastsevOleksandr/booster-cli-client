@@ -25,12 +25,16 @@ public class ListVocabularyEntriesTest extends BaseIntegrationTest {
                 .respond(response().withStatusCode(200).withBody("""
                         [
                             {
+                                "id": 1,
                                 "name": "%s",
-                                "description": "%s"
+                                "description": "%s",
+                                "synonyms": ["unite", "combine"]
                             },
                             {
+                                "id": 2,
                                 "name": "%s",
-                                "description": "%s"
+                                "description": "%s",
+                                "synonyms": []
                             }
                         ]
                         """.formatted(coalesce, coalesceDescription, robust, robustDescription)));
@@ -55,13 +59,15 @@ public class ListVocabularyEntriesTest extends BaseIntegrationTest {
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
                 >> Welcome to the booster-cli!
                 >> Type any command or '%s' to get help.
+                >>
                 >> %s
-                >> VocabularyEntryDto(name=%s, description=%s)
-                >> VocabularyEntryDto(name=%s, description=%s)
+                >> VocabularyEntryDto(id=1, name=%s, description=%s, synonyms=[%s, %s])
+                >> VocabularyEntryDto(id=2, name=%s, description=%s, synonyms=[])
                 >> %s"""
                 .formatted(Command.HELP.getValue(),
                         Command.LIST_VOCABULARY_ENTRIES.getValue(),
                         coalesce, coalesceDescription,
+                        "unite", "combine",
                         robust, robustDescription,
                         Command.EXIT.getValue()));
     }

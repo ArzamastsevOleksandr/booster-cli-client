@@ -31,15 +31,21 @@ public class CommandHandlerService {
     public void handle(Command command) {
         Optional.ofNullable(commandHandlerPerCommand.get(command))
                 .ifPresentOrElse((commandHandler) -> {
-                            try {
-                                commandHandler.handle();
-                            } catch (Exception e) {
-                                outputWriter.println("Oops, an error occurred. Cause: %s".formatted(e.getCause().getMessage()));
-                            }
-                        },
-                        () -> {
-                            throw new IllegalArgumentException("Command has no handler [command=%s]".formatted(command));
-                        });
+                    try {
+                        commandHandler.handle();
+                    } catch (Exception e) {
+                        outputWriter.println("Oops, an error occurred. Cause: %s".formatted(exceptionCauseOrErrorMessage(e)));
+                    }
+                }, () -> {
+                    throw new IllegalArgumentException("Command has no handler [command=%s]".formatted(command));
+                });
+    }
+
+    private String exceptionCauseOrErrorMessage(Exception e) {
+        return Optional.of(e)
+                .map(Exception::getCause)
+                .map(Throwable::getMessage)
+                .orElse(e.getMessage());
     }
 
 }

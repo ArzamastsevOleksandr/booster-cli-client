@@ -58,6 +58,7 @@ public class ErrorHandlingTest extends BaseIntegrationTest {
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
                 >> Welcome to the booster-cli!
                 >> Type any command or '%s' to get help.
+                >>
                 >> %s
                 >> Content: %s
                 >> Oops, an error occurred. Cause: Connection refused

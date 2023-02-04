@@ -13,7 +13,7 @@ public class OutputWriter {
         System.out.printf(">> %s: ", outputMessage);
     }
 
-    public void println(String outputMessage) {
+    public void println(Object outputMessage) {
         System.out.printf(">> %s%n", outputMessage);
     }
 

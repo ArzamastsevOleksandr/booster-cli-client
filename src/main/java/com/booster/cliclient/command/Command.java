@@ -21,11 +21,15 @@ public enum Command {
     private final String value;
     private final String userFriendlyName;
 
-    public static Command from(String in) {
+    public static Command from(String input) {
         return Arrays.stream(values())
-                .filter(cmd -> cmd.value.equals(in))
+                .filter(cmd -> cmd.value.equals(input))
                 .findFirst()
                 .orElse(UNDEFINED);
+    }
+
+    public static boolean isExit(String input) {
+        return from(input) == EXIT;
     }
 
     @Override

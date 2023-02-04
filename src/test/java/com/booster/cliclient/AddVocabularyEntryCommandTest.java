@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.doAnswer;
@@ -24,11 +25,14 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
         mockServer.when(request().withMethod("POST").withPath("/vocabulary-entry")
                         .withBody(exact(objectMapper.writeValueAsString(new CreateVocabularyEntryInput()
                                 .setName(name)
-                                .setDescription(description)))))
+                                .setDescription(description)
+                                .setSynonyms(Set.of("unite", "combine"))))))
                 .respond(response().withStatusCode(201).withBody("""
                         {
+                            "id": 1,
                             "name": "%s",
-                            "description": "%s"
+                            "description": "%s",
+                            "synonyms": ["unite", "combine"]
                         }
                         """.formatted(name, description)));
 
@@ -38,8 +42,8 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
             System.setOut(new PrintStream(bytes));
 
             doAnswer(new MultipleAnswer<>(i -> {
-                System.out.println();
-                return "";
+                System.out.println(Command.DO_NOTHING.getValue());
+                return Command.DO_NOTHING.getValue();
             }, i -> {
                 System.out.println(Command.ADD_VOCABULARY_ENTRY.getValue());
                 return Command.ADD_VOCABULARY_ENTRY.getValue();
@@ -49,6 +53,15 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
             }, i -> {
                 System.out.println(description);
                 return description;
+            }, i -> {
+                System.out.println("unite");
+                return "unite";
+            }, i -> {
+                System.out.println("combine");
+                return "combine";
+            }, i -> {
+                System.out.println(Command.DO_NOTHING.getValue());
+                return Command.DO_NOTHING.getValue();
             }, i -> {
                 System.out.println(Command.EXIT.getValue());
                 return Command.EXIT.getValue();
@@ -62,13 +75,24 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
                 >> Welcome to the booster-cli!
                 >> Type any command or '%s' to get help.
                 >>
+                >>
                 >> %s
                 >> Name: %s
                 >> Description: %s
+                >> Synonyms (one at a time). Type '%s' to break out or ENTER to finish
+                >> Synonym: %s
+                >> Synonym: %s
+                >> Synonym:
+                >> VocabularyEntryDto(id=1, name=%s, description=%s, synonyms=[%s, %s])
+                >>
                 >> %s""".formatted(Command.HELP.getValue(),
                 Command.ADD_VOCABULARY_ENTRY.getValue(),
                 name,
                 description,
+                Command.EXIT.getValue(),
+                "unite",
+                "combine",
+                name, description, "unite", "combine",
                 Command.EXIT.getValue()));
     }
 
