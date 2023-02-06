@@ -2,12 +2,13 @@ package com.booster.cliclient;
 
 import com.booster.cliclient.command.Command;
 import com.booster.cliclient.dto.CreateVocabularyEntryInput;
+import com.booster.cliclient.dto.VocabularyEntryDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Set;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.doAnswer;
@@ -26,15 +27,13 @@ class AddVocabularyEntryCommandTest extends BaseIntegrationTest {
                         .withBody(exact(objectMapper.writeValueAsString(new CreateVocabularyEntryInput()
                                 .setName(name)
                                 .setDescription(description)
-                                .setSynonyms(Set.of("unite", "combine"))))))
-                .respond(response().withStatusCode(201).withBody("""
-                        {
-                            "id": 1,
-                            "name": "%s",
-                            "description": "%s",
-                            "synonyms": ["unite", "combine"]
-                        }
-                        """.formatted(name, description)));
+                                .setSynonyms(List.of("unite", "combine"))))))
+                .respond(response().withStatusCode(201).withBody(objectMapper.writeValueAsString(
+                        new VocabularyEntryDto()
+                                .setId(1L)
+                                .setName(name)
+                                .setDescription(description)
+                                .setSynonyms(List.of("unite", "combine")))));
 
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         PrintStream console = System.out;

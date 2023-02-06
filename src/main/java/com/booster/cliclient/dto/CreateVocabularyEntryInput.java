@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.Set;
+import java.util.Collection;
 
 // todo: consider creating a separate 'api' project that contains all API contracts
 @Getter
@@ -13,5 +13,5 @@ import java.util.Set;
 public class CreateVocabularyEntryInput {
     private String name;
     private String description;
-    private Set<String> synonyms;
+    private Collection<String> synonyms;
 }
