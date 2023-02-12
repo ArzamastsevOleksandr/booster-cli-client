@@ -61,7 +61,7 @@ public class AddVocabularyEntryCommandHandler implements CommandHandler {
 
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                outputWriter.print("Error occurred [code=%s]".formatted(response.code()));
+                outputWriter.println("Error occurred [code=%s]".formatted(response.code()));
             } else {
                 outputWriter.println(objectMapper.readValue(response.body().string(), VocabularyEntryDto.class));
                 outputWriter.println();
