@@ -42,6 +42,7 @@ public class DeleteNoteCommandTest extends BaseIntegrationTest {
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
                 >> Welcome to the booster-cli!
                 >> Type any command or '%s' to get help.
+                >>
                 >> %s
                 >> Id: 1
                 >> Note deleted

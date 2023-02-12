@@ -27,7 +27,7 @@ public class ListVocabularyEntriesCommandHandler implements CommandHandler {
     // todo: handle OkHttp exceptions
     public void handle() {
         Request request = new Request.Builder()
-                .url("http://localhost:8081/vocabulary-entry/list?size=5") // todo: temporary hardcode
+                .url("http://localhost:8081/vocabulary-entry/list?size=100") // todo: temporary hardcode
                 .get()
                 .build();
 
@@ -37,6 +37,8 @@ public class ListVocabularyEntriesCommandHandler implements CommandHandler {
                 List<VocabularyEntryDto> vocabularyEntries = objectMapper.readValue(list, new TypeReference<>() {
                 });
                 vocabularyEntries.forEach(outputWriter::print);
+            } else {
+                outputWriter.println("Error occurred");
             }
         }
     }

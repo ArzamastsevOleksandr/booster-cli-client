@@ -19,7 +19,7 @@ public class ListNotesTest extends BaseIntegrationTest {
         String secondNoteContent = "Call a friend";
 
         mockServer.when(request().withMethod("GET").withPath("/note/list")
-                        .withQueryStringParameter("size", "5"))
+                        .withQueryStringParameter("size", "100"))
                 .respond(response().withStatusCode(200).withBody("""
                         [
                             {

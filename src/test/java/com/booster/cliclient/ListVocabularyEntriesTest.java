@@ -21,7 +21,7 @@ public class ListVocabularyEntriesTest extends BaseIntegrationTest {
         String robustDescription = "strong and healthy; hardy; vigorous";
 
         mockServer.when(request().withMethod("GET").withPath("/vocabulary-entry/list")
-                        .withQueryStringParameter("size", "5"))
+                        .withQueryStringParameter("size", "100"))
                 .respond(response().withStatusCode(200).withBody("""
                         [
                             {
