@@ -10,3 +10,8 @@ To start the project run it from the IDEA or execute the following command from 
 ```bash
 ./mvnw clean install && java -jar target/cli-client-0.0.1-SNAPSHOT.jar
 ```
+
+To run all tests execute the following command from the project root:
+```bash
+./mvnw clean test
+```

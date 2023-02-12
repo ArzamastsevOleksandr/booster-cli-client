@@ -34,22 +34,29 @@ public class HelpCommandTest extends BaseIntegrationTest {
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
                 >> Welcome to the booster-cli!
                 >> Type any command or '%s' to get help.
+                >>
                 >> %s
                 >> The following commands are supported:
                 >>
-                >> e - exit
-                >> ave - add a vocabulary entry
-                >> lve - list vocabulary entries
-                >> an - add a note
-                >> ln - list notes
-                >> h - help
+                >> %s - %s
+                >> %s - %s
+                >> %s - %s
+                >> %s - %s
+                >> %s - %s
+                >> %s - %s
                 >>
                 >> To execute any command, type its short form, for example '%s' to list vocabulary entries
                 >>
-                >> Type 'e' to stop the app or break out of other commands.
+                >> Type '%s' to stop the app or break out of other commands.
                 >>
-                >> e""".formatted(Command.HELP.getValue(),
+                >> %s""".formatted(Command.HELP.getValue(),
                 Command.HELP.getValue(),
+                Command.EXIT.getValue(), Command.EXIT.getUserFriendlyName(),
+                Command.ADD_VOCABULARY_ENTRY.getValue(), Command.ADD_VOCABULARY_ENTRY.getUserFriendlyName(),
+                Command.LIST_VOCABULARY_ENTRIES.getValue(), Command.LIST_VOCABULARY_ENTRIES.getUserFriendlyName(),
+                Command.ADD_NOTE.getValue(), Command.ADD_NOTE.getUserFriendlyName(),
+                Command.LIST_NOTES.getValue(), Command.LIST_NOTES.getUserFriendlyName(),
+                Command.HELP.getValue(), Command.HELP.getUserFriendlyName(),
                 Command.LIST_VOCABULARY_ENTRIES.getValue(),
                 Command.EXIT.getValue(),
                 Command.EXIT.getValue()));

@@ -23,9 +23,11 @@ public class ListNotesTest extends BaseIntegrationTest {
                 .respond(response().withStatusCode(200).withBody("""
                         [
                             {
+                                "id": 1,
                                 "content": "%s"
                             },
                             {
+                                "id": 2,
                                 "content": "%s"
                             }
                         ]
@@ -51,9 +53,10 @@ public class ListNotesTest extends BaseIntegrationTest {
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
                 >> Welcome to the booster-cli!
                 >> Type any command or '%s' to get help.
+                >>
                 >> %s
-                >> NoteDto(content=%s)
-                >> NoteDto(content=%s)
+                >> NoteDto(id=1, content=%s)
+                >> NoteDto(id=2, content=%s)
                 >> %s"""
                 .formatted(Command.HELP.getValue(),
                         Command.LIST_NOTES.getValue(),

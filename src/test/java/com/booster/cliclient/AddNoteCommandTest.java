@@ -52,6 +52,7 @@ public class AddNoteCommandTest extends BaseIntegrationTest {
         assertThat(bytes.toString().trim().stripIndent()).isEqualTo("""
                 >> Welcome to the booster-cli!
                 >> Type any command or '%s' to get help.
+                >>
                 >> %s
                 >> Content: %s
                 >> %s""".formatted(Command.HELP.getValue(),
