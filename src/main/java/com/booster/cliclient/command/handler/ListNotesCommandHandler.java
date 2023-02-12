@@ -38,7 +38,7 @@ public class ListNotesCommandHandler implements CommandHandler {
                 });
                 notes.forEach(outputWriter::print);
             } else {
-                outputWriter.print("Error occurred");
+                outputWriter.println("Error occurred");
             }
         }
     }
