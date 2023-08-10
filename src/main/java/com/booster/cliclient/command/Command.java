@@ -16,6 +16,7 @@ public enum Command {
     ADD_NOTE("an", "add a note"),
     LIST_NOTES("ln", "list notes"),
     HELP("h", "help"),
+    DELETE_NOTE("dn", "delete a note"),
     UNDEFINED("IGNORED", "WRITE A COMPLAINT IF YOU SEE THIS:)");
 
     private final String value;

@@ -41,7 +41,7 @@ public class AddNoteCommandHandler implements CommandHandler {
 
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                outputWriter.print("Error occurred");
+                outputWriter.println("Error occurred");
             }
         }
     }
