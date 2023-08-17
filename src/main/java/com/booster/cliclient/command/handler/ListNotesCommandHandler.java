@@ -2,7 +2,9 @@ package com.booster.cliclient.command.handler;
 
 import com.booster.cliclient.command.Command;
 import com.booster.cliclient.console.OutputWriter;
+import com.booster.cliclient.console.UserInputReader;
 import com.booster.cliclient.dto.NoteDto;
+import com.booster.cliclient.settings.SessionSettings;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,8 @@ public class ListNotesCommandHandler implements CommandHandler {
     private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
     private final OutputWriter outputWriter;
+    private final SessionSettings settings;
+    private final UserInputReader reader;
 
     @Override
     @SneakyThrows
@@ -36,7 +40,20 @@ public class ListNotesCommandHandler implements CommandHandler {
                 String list = response.body().string();
                 List<NoteDto> notes = objectMapper.readValue(list, new TypeReference<>() {
                 });
-                notes.forEach(outputWriter::print);
+                String input = "breakOutOfTheLoop";
+                for (int noteIndex = 0; noteIndex < notes.size() && !Command.isExit(input); ) {
+                    int notesBatchSize = settings.notesBatchSize();
+                    for (int j = 0; j < notesBatchSize && noteIndex < notes.size(); ++j, ++noteIndex) {
+                        outputWriter.print(notes.get(noteIndex));
+                        if (noteIndex == notes.size() - 1) {
+                            outputWriter.println();
+                        } else if (j == notesBatchSize - 1) {
+                            outputWriter.printStart();
+                            input = reader.readLine();
+                        }
+                    }
+                }
+
             } else {
                 outputWriter.println("Error occurred");
             }
