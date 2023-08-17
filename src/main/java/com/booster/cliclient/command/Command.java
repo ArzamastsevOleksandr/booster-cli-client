@@ -17,6 +17,7 @@ public enum Command {
     LIST_NOTES("ln", "list notes"),
     HELP("h", "help"),
     DELETE_NOTE("dn", "delete a note"),
+    PRACTICE_VOCABULARY("pv", "practice vocabulary"),
     UNDEFINED("IGNORED", "WRITE A COMPLAINT IF YOU SEE THIS:)");
 
     private final String value;
@@ -38,4 +39,5 @@ public enum Command {
         return getValue() + " - " + getUserFriendlyName();
     }
 
+    // todo: cache values()
 }
