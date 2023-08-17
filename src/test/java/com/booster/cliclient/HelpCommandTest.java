@@ -45,6 +45,7 @@ public class HelpCommandTest extends BaseIntegrationTest {
                 >> %s - %s
                 >> %s - %s
                 >> %s - %s
+                >> %s - %s
                 >>
                 >> To execute any command, type its short form, for example '%s' to list vocabulary entries
                 >>
@@ -59,6 +60,7 @@ public class HelpCommandTest extends BaseIntegrationTest {
                 Command.LIST_NOTES.getValue(), Command.LIST_NOTES.getUserFriendlyName(),
                 Command.HELP.getValue(), Command.HELP.getUserFriendlyName(),
                 Command.DELETE_NOTE.getValue(), Command.DELETE_NOTE.getUserFriendlyName(),
+                Command.PRACTICE_VOCABULARY.getValue(), Command.PRACTICE_VOCABULARY.getUserFriendlyName(),
                 Command.LIST_VOCABULARY_ENTRIES.getValue(),
                 Command.EXIT.getValue(),
                 Command.EXIT.getValue()));
