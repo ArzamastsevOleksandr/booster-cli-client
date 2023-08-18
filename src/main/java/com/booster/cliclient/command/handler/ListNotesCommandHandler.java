@@ -40,12 +40,13 @@ public class ListNotesCommandHandler implements CommandHandler {
                 String list = response.body().string();
                 List<NoteDto> notes = objectMapper.readValue(list, new TypeReference<>() {
                 });
+                int notesCount = notes.size();
                 String input = "breakOutOfTheLoop";
-                for (int noteIndex = 0; noteIndex < notes.size() && !Command.isExit(input); ) {
+                for (int noteIndex = 0; noteIndex < notesCount && !Command.isExit(input); ) {
                     int notesBatchSize = settings.notesBatchSize();
-                    for (int j = 0; j < notesBatchSize && noteIndex < notes.size(); ++j, ++noteIndex) {
+                    for (int j = 0; j < notesBatchSize && noteIndex < notesCount; ++j, ++noteIndex) {
                         outputWriter.print(notes.get(noteIndex));
-                        if (noteIndex == notes.size() - 1) {
+                        if (noteIndex == notesCount - 1) {
                             outputWriter.println();
                         } else if (j == notesBatchSize - 1) {
                             outputWriter.printStart();
@@ -53,7 +54,6 @@ public class ListNotesCommandHandler implements CommandHandler {
                         }
                     }
                 }
-
             } else {
                 outputWriter.println("Error occurred");
             }
