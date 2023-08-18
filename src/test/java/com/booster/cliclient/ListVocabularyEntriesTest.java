@@ -1,20 +1,28 @@
 package com.booster.cliclient;
 
 import com.booster.cliclient.command.Command;
+import com.booster.cliclient.settings.SessionSettings;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.when;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 public class ListVocabularyEntriesTest extends BaseIntegrationTest {
 
+    @MockBean
+    SessionSettings settings;
+
     @Test
     void listVocabularyEntriesFlow() {
+        when(settings.vocabularyEntriesBatchSize()).thenReturn(1);
+
         String coalesce = "coalesce";
         String coalesceDescription = "come together to form one mass or whole";
         String robust = "robust";
@@ -48,6 +56,9 @@ public class ListVocabularyEntriesTest extends BaseIntegrationTest {
                 System.out.println(Command.LIST_VOCABULARY_ENTRIES.getValue());
                 return Command.LIST_VOCABULARY_ENTRIES.getValue();
             }, i -> {
+                System.out.println(Command.DO_NOTHING.getValue());
+                return Command.DO_NOTHING.getValue();
+            }, i -> {
                 System.out.println(Command.EXIT.getValue());
                 return Command.EXIT.getValue();
             })).when(adapter).readLine();
@@ -62,7 +73,9 @@ public class ListVocabularyEntriesTest extends BaseIntegrationTest {
                 >>
                 >> %s
                 >> VocabularyEntryDto(id=1, name=%s, description=%s, synonyms=[%s, %s])
+                >>
                 >> VocabularyEntryDto(id=2, name=%s, description=%s, synonyms=[])
+                >>
                 >> %s"""
                 .formatted(Command.HELP.getValue(),
                         Command.LIST_VOCABULARY_ENTRIES.getValue(),

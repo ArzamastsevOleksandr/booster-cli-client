@@ -11,4 +11,8 @@ public class SessionSettings {
         return 5;
     }
 
+    public int vocabularyEntriesBatchSize() {
+        return 5;
+    }
+
 }
